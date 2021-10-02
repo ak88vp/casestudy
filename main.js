@@ -1,6 +1,8 @@
 let canvas = document.getElementById('myGame');
 let ctx = canvas.getContext('2d');
 let scoreShow = document.getElementById("score");
+let audio=new Audio('cxloblap.mp3')
+
 let birdImg = new Image(); //tạo biến để thêm ảnh ( chim )
 let display = new Image();  // ảnh nền
 let columnUp = new Image(); // ống trên
@@ -14,8 +16,8 @@ let score = 0;
 let distanceColumn = 140;     // khoảng cách giữa 2 ống
 let distance;                 // khoảng cách vị trí từ đầu ống trên đến đầu ống dưới
 let bird = {
-    x: display.width / 5, // tạo biến chim với tọa độ x,y so với hình nền
-    y: display.height / 2
+    x: display.width / 10, // tạo biến chim với tọa độ x,y so với hình nền
+    y: display.height /1.5
 }
 let pillar = [];   // tạo biến ống rỗng
 pillar[0] = {
@@ -25,6 +27,7 @@ pillar[0] = {
 //y là chiều cao ,x và y tọa độ so với gốc là góc cao nhất đầu tiên bên trái .
 // tạo hàm start để chạy chương trình
 function start() {
+    audio.play();
     ctx.drawImage(display, 0, 0);             // drawImage () vẽ một hình ảnh lên canvas có tạo độ x,y context.drawImage(img,x,y);
     ctx.drawImage(birdImg, bird.x, bird.y);
     for (let i = 0; i < pillar.length; i++) {
