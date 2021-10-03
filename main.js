@@ -1,7 +1,10 @@
 let canvas = document.getElementById('myGame');
 let ctx = canvas.getContext('2d');
 let scoreShow = document.getElementById("score");
-let audio=new Audio('cxloblap.mp3')
+let audio=new Audio('cxloblap.mp3', volume=0.1)
+let flap =new Audio('flap.mp3')
+let die = new Audio('die.mp3')
+let point=new Audio('point.mp3')
 
 let birdImg = new Image(); //tạo biến để thêm ảnh ( chim )
 let display = new Image();  // ảnh nền
@@ -49,8 +52,11 @@ function start() {
             pillar.splice(0, 1) // splice dùng để thêm hoặc xóa phần tử trong mảnh
                                              // ở đây ở vị trí 0 , xóa 1 phần tử
         }
-        if (pillar[i].x === bird.x) // nếu tọa độ x của ống và chim bằng nhau thì điểm cộng 1
+        if (pillar[i].x === bird.x) {
+            // nếu tọa độ x của ống và chim bằng nhau thì điểm cộng 1
             score += 1;
+            point.play()
+        }
         if (bird.y + birdImg.height === canvas.height ||
             bird.x + birdImg.width >= pillar[i].x && bird.x <= pillar[i].x + columnUp.width
             && (bird.y <= pillar[i].y + columnUp.height ||
@@ -59,11 +65,13 @@ function start() {
             // th2 so sánh vị trí của con chim với ống
             // so sánh vị trí y
         ) {
+            die.play()
             return;
         }
 
     }
     scoreShow.innerHTML = "score: " + score;
+
     bird.y -= 3; // làm cho chim ơi bay lên :))
     requestAnimationFrame(start)
     //yêu cầu trình duyệt gọi hàm start để cập nhập lại toàn bộ ảnh trước lần start 2 ....
@@ -72,7 +80,9 @@ function start() {
 document.addEventListener("keydown", function () {
     // addEventListener () gắn một trình xử lý sự kiện vào phần tử được chỉ định ( khi bấm nhấn xuống
     //thì ở function sẽ thực hiện bird.y+=60
+    flap.play()
     bird.y += 60; // mỗi lần ấn xuống là chym sẽ giảm 60.
+
 })
 
 start();
